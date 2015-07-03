@@ -1,0 +1,20 @@
+{
+    "bitwise": true,
+    "curly": true,
+    "eqeqeq": true,
+    "latedef": "nofunc",
+    "moz": true,
+    "nocomma": true,
+    "nonbsp": true,
+    "singleGroups": true,
+    "undef": true,
+    "unused": "vars",
+    "varstmt": true,
+    "globals": {
+        "APP_SHUTDOWN": false,
+        "Components": false,
+        "Services": false,
+        "XPCOMUtils": false,
+        "console": false
+    }
+}
