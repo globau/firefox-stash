@@ -331,7 +331,6 @@ function unloadFromWindow(window) {
         return;
     }
     for (let item of menuItems) {
-        console.dir(item);
         if (item.type === 'menu') {
             window.document.getElementById(item.id + '-popup').remove();
         }
