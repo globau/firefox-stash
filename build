@@ -3,6 +3,7 @@ use strict;
 use FindBin qw($RealBin);
 use IO::Compress::Zip qw(zip $ZipError);
 
+chdir($RealBin);
 my $xpi_file = 'stash.xpi';
 unlink($xpi_file) if -e $xpi_file;
 zip [qw( bootstrap.js README.md install.rdf LICENSE.txt )] => $xpi_file
