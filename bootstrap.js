@@ -7,12 +7,10 @@
 
 const { classes: Cc, interfaces: Ci, utils: Cu } = Components;
 Cu.import('resource://gre/modules/Services.jsm');
-Cu.import("resource://gre/modules/XPCOMUtils.jsm");
+Cu.import('resource://gre/modules/XPCOMUtils.jsm');
 
 let bs = Cc['@mozilla.org/browser/nav-bookmarks-service;1'].getService(Ci.nsINavBookmarksService);
 let hs = Cc['@mozilla.org/browser/nav-history-service;1'].getService(Ci.nsINavHistoryService);
-let io = Cc['@mozilla.org/network/io-service;1'].getService(Ci.nsIIOService);
-let wm = Cc['@mozilla.org/appshell/window-mediator;1'].getService(Ci.nsIWindowMediator);
 
 //
 // stash and restore
@@ -44,7 +42,7 @@ function stash() {
     // add bookmark group to 'stashed' group
     let folderID = bs.createFolder(stashedFolderID(), name, bs.DEFAULT_INDEX);
     for (let tab of tabs) {
-        bs.insertBookmark(folderID, io.newURI(tab.url, null, null), bs.DEFAULT_INDEX, tab.title);
+        bs.insertBookmark(folderID, Services.io.newURI(tab.url, null, null), bs.DEFAULT_INDEX, tab.title);
     }
 
     // close window
@@ -151,7 +149,7 @@ function findBookmarks(rootID, filter) {
     let rootNode = hs.executeQuery(query, options).root;
     let nodes = [];
     rootNode.containerOpen = true;
-    for (let i = 0, il = rootNode.childCount; i < il; i ++) {
+    for (let i = 0, il = rootNode.childCount; i < il; i++) {
         let node = rootNode.getChild(i);
         if (!filter || filter(node)) {
             nodes.push(node);
@@ -371,10 +369,10 @@ function shutdown(data, reason) {
         return;
     }
 
-    wm.removeListener(windowListener);
+    Services.wm.removeListener(windowListener);
     bs.removeObserver(bookmarkListener);
 
-    let windows = wm.getEnumerator('navigator:browser');
+    let windows = Services.wm.getEnumerator('navigator:browser');
     while (windows.hasMoreElements()) {
         let domWindow = windows.getNext().QueryInterface(Ci.nsIDOMWindow);
         try {
