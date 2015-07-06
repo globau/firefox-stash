@@ -8,7 +8,7 @@
     <em:type>2</em:type>
     <em:id>firefox-stash@glob.com.au</em:id>
     <em:name>Stash</em:name>
-    <em:version>1.0</em:version>
+    <em:version>1.0.1</em:version>
     <em:description>Allows a window to be 'stashed' (bookmarked and closed) and later 'restored' (reopened and bookmarks deleted).</em:description>
     <em:creator>Byron Jones</em:creator>
 
