@@ -1,6 +1,8 @@
 Stash Add-on
 ============
 
+https://addons.mozilla.org/firefox/addon/stash/
+
 Adds "stash" and "restore" menu items to the tools menu.
 
 "stash" will prompt for a name, then save the current window's tabs and close
