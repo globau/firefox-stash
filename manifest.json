@@ -26,7 +26,7 @@
   },
   "applications": {
     "gecko": {
-      "id": "stash@glob.com.au"
+      "id": "firefox-stash@glob.com.au"
     }
   }
 }
