@@ -1,0 +1,32 @@
+{
+  "manifest_version": 2,
+  "name": "Stash",
+  "version": "2.0",
+  "description": "Store and restore windows and tabs.",
+  "icons": {
+    "48": "assets/icon-48.png",
+    "96": "assets/icon-96.png"
+  },
+  "permissions": [
+    "storage",
+    "tabs"
+  ],
+  "browser_action": {
+    "browser_style": true,
+    "default_icon": "assets/icon.svg",
+    "default_title": "Stash",
+    "default_popup": "src/stash.html",
+    "theme_icons": [
+      {
+        "light": "assets/icon-light.svg",
+        "dark": "assets/icon.svg",
+        "size": 32
+      }
+    ]
+  },
+  "applications": {
+    "gecko": {
+      "id": "stash@glob.com.au"
+    }
+  }
+}

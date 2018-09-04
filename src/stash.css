@@ -1,0 +1,42 @@
+.hidden {
+    display: none !important;
+}
+
+/* ensure initial paint is wide enough, removes visible reflow */
+#popup {
+    min-width: 13em;
+}
+
+#create .panel-section-formElements .title {
+    margin-bottom: 0.5em;
+}
+
+#create .panel-section-formElements {
+    padding-bottom: 0;
+}
+
+#create-exists {
+    display: inline-block;
+    vertical-align: middle;
+    color: #444;
+}
+
+#create-preview {
+    padding-bottom: 12px;
+}
+
+.panel-list-item .text {
+    max-width: 25em;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+}
+
+#popup .panel-list-item .text-shortcut {
+    margin-left: 20px;
+}
+
+#create-preview .panel-list-item.title {
+    font-weight: bold;
+    color: #000;
+}

@@ -2,6 +2,7 @@
     "bitwise": true,
     "curly": true,
     "eqeqeq": true,
+    "esversion": 6,
     "latedef": "nofunc",
     "moz": true,
     "nocomma": true,
@@ -11,10 +12,9 @@
     "unused": "vars",
     "varstmt": true,
     "globals": {
-        "APP_SHUTDOWN": false,
-        "Components": false,
-        "Services": false,
-        "XPCOMUtils": false,
-        "console": false
+        "browser": false,
+        "console": false,
+        "document": false,
+        "window": false
     }
 }

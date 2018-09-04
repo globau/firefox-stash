@@ -1,10 +1,49 @@
-#!/usr/bin/perl
-use strict;
-use FindBin qw($RealBin);
-use IO::Compress::Zip qw(zip $ZipError);
+#!/usr/bin/env python3
+import json
+import os
+import subprocess
+import sys
 
-chdir($RealBin);
-my $xpi_file = 'stash.xpi';
-unlink($xpi_file) if -e $xpi_file;
-zip [qw( bootstrap.js README.md install.rdf LICENSE.txt )] => $xpi_file
-    or die "zip failed: $ZipError\n";
+os.chdir(os.path.dirname(__file__))
+
+with open("manifest.json") as f:
+    manifest = json.load(f)
+current_version = manifest["version"]
+
+new_version = None
+if len(sys.argv) > 1:
+    if sys.argv[1] == "--release" and len(sys.argv) == 3:
+        if sys.argv[2] != current_version:
+            new_version = sys.argv[2]
+    else:
+        print("usage: build [--release version]")
+        sys.exit(1)
+
+if new_version:
+    print("build new release: %s -> %s" % (current_version, new_version))
+    manifest["version"] = new_version
+else:
+    print("building release %s" % current_version)
+
+print("formatting..")
+subprocess.check_call(["js-beautify", "-r", "src/stash.js"])
+
+print("js linting..")
+subprocess.check_call(["jshint", "src/stash.js"])
+
+print("web-ext linting..")
+subprocess.check_call(["web-ext", "lint", "--warnings-as-errors"])
+
+print("building..")
+subprocess.check_call(
+    ["web-ext", "build"]
+    + ["--overwrite-dest"]
+    + ["--ignore-files", "build"]
+    + ["--artifacts-dir", "dist"]
+)
+
+if new_version:
+    with open("manifest.json", "w") as f:
+        json.dump(manifest, f, indent=2)
+        f.write("\n")
+    print("manifest.json updated")

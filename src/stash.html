@@ -1,0 +1,49 @@
+<!doctype html>
+<html>
+<head>
+    <title>Stash</title>
+    <link rel="stylesheet" href="stash.css">
+    <meta charset="utf-8">
+</head>
+<body>
+    <div id="popup" class="panel-section panel-section-list">
+        <div id="stash-current" class="panel-list-item disabled">
+            <div class="text">Stash Current Window</div>
+            <div class="text-shortcut">&gt;</div>
+        </div>
+
+        <div id="stash-all" class="panel-list-item disabled">
+            <div class="text">Stash All Windows</div>
+            <div class="text-shortcut">&gt;</div>
+        </div>
+
+        <div class="panel-section-separator"></div>
+
+        <div id="stash-empty" class="panel-list-item disabled">
+            <div class="text">Nothing stashed</div>
+        </div>
+    </div>
+
+    <div id="create" class="hidden">
+        <div class="panel-section panel-section-formElements">
+            <div id="create-title-current" class="title hidden">Stash current window as:</div>
+            <div id="create-title-all" class="title hidden">Stash all windows as:</div>
+            <div class="panel-formElements-item">
+                <input type="text" value="Name" id="name">
+            </div>
+            <div>
+                <button class="browser-style default" id="save-btn">Save</button>
+                <div id="create-exists">
+                    <img src="/assets/warning.svg" width="16" height="16">
+                    Already exists
+                </div>
+            </div>
+        </div>
+        <div id="create-preview" class="panel-section panel-section-list">
+            <div class="panel-section-separator"></div>
+        </div>
+    </div>
+
+    <script src="stash.js"></script>
+</body>
+</html>
