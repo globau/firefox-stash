@@ -198,7 +198,8 @@ function restore(stash_id) {
                     if (
                         win.tabs.length === 1 && (
                             win.tabs[0].url === 'about:blank' ||
-                            win.tabs[0].url === 'about:newtab'
+                            win.tabs[0].url === 'about:newtab' ||
+                            win.tabs[0].url === 'about:home'
                         )
                     ) {
                         let stashed_win = stashed.shift();
