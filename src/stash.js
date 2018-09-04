@@ -55,8 +55,7 @@ function show_create_form() {
         let item_div = document.createElement('div');
         item_div.classList.add('panel-list-item');
         if (is_title) {
-            item_div.classList.add('title');
-            item_div.classList.add('disabled');
+            item_div.classList.add('title', 'disabled');
         } else {
             item_div.addEventListener('click', set_name_from_tab);
         }
@@ -382,8 +381,7 @@ function init_g_stashed() {
 
     function add_list_item(id, text, title) {
         let item_div = document.createElement('div');
-        item_div.classList.add('panel-list-item');
-        item_div.classList.add('stashed');
+        item_div.classList.add('panel-list-item', 'stashed');
         item_div.dataset.id = id;
         let text_div = document.createElement('div');
         text_div.classList.add('text');
