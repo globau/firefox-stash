@@ -1,6 +1,7 @@
 let g_stashed; // index of stashed sets
 let g_windows; // current windows and tabs
 let g_focused; // current window with tabs
+let g_show_badge = true; // show count of stashes on toolbar icon
 
 function $$(selector) {
     return document.querySelector(selector);
@@ -15,6 +16,18 @@ function stash_exists(name) {
     return g_stashed.some((s) => {
         return s.name === name;
     });
+}
+
+function update_badge() {
+    if (g_show_badge) {
+        browser.browserAction.setBadgeText({
+            text: `${g_stashed.length || ''}`
+        });
+    } else {
+        browser.browserAction.setBadgeText({
+            text: '',
+        });
+    }
 }
 
 function show_create_form() {
@@ -118,6 +131,8 @@ function stash(windows) {
         title: title,
         summary: plural(windows.length, 'window') + ', ' + plural(tab_count, 'tab'),
     });
+    update_badge();
+
     browser.storage.sync.set({
             index: g_stashed
         })
@@ -227,6 +242,7 @@ function remove_stash(stash_id) {
     for (let i in g_stashed) {
         if (g_stashed[i].id === stash_id) {
             g_stashed.splice(i, 1);
+            update_badge();
             updated = true;
             break;
         }
@@ -407,20 +423,26 @@ function init_g_stashed() {
         stashed_item = $$('#popup .stashed');
     }
 
-    browser.storage.sync.get(['index'])
-        .then((value) => {
-            if (!value.index) {
-                return;
-            }
+    browser.storage.sync.get(['index', 'hide_badge'])
+        .then((result) => {
+            try {
+                g_show_badge = !result.hide_badge;
 
-            g_stashed = value.index.filter(s => s);
-            if (!g_stashed.length) {
-                return;
-            }
+                if (!result.index) {
+                    return;
+                }
 
-            $$('#stash-empty').classList.add('hidden');
-            for (let s of g_stashed) {
-                add_list_item(s.id, s.title, s.summary);
+                g_stashed = result.index.filter(s => s);
+                if (!g_stashed.length) {
+                    return;
+                }
+
+                $$('#stash-empty').classList.add('hidden');
+                for (let s of g_stashed) {
+                    add_list_item(s.id, s.title, s.summary);
+                }
+            } finally {
+                update_badge();
             }
         })
         .catch((e) => {

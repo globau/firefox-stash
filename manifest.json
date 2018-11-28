@@ -11,6 +11,11 @@
     "storage",
     "tabs"
   ],
+  "background": {
+    "scripts": [
+      "src/background.js"
+    ]
+  },
   "browser_action": {
     "browser_style": true,
     "default_icon": "assets/icon.svg",
@@ -23,6 +28,10 @@
         "size": 32
       }
     ]
+  },
+  "options_ui": {
+    "page": "src/options.html",
+    "browser_style": true
   },
   "applications": {
     "gecko": {
