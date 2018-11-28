@@ -1,38 +1,41 @@
 #!/usr/bin/env python3
+import argparse
+import glob
 import json
 import os
 import subprocess
 import sys
 
+parser = argparse.ArgumentParser()
+group = parser.add_mutually_exclusive_group()
+group.add_argument("--release")
+group.add_argument("--quick", "-q", action="store_true")
+args = parser.parse_args()
+
 os.chdir(os.path.dirname(__file__))
 
-with open("manifest.json") as f:
-    manifest = json.load(f)
-current_version = manifest["version"]
+if not args.quick:
+    with open("manifest.json") as f:
+        manifest = json.load(f)
+    current_version = manifest["version"]
 
-new_version = None
-if len(sys.argv) > 1:
-    if sys.argv[1] == "--release" and len(sys.argv) == 3:
-        if sys.argv[2] != current_version:
-            new_version = sys.argv[2]
+    if args.release:
+        print("build new release: %s -> %s" % (current_version, args.release))
+        manifest["version"] = args.release
     else:
-        print("usage: build [--release version]")
-        sys.exit(1)
+        print("building release %s" % current_version)
 
-if new_version:
-    print("build new release: %s -> %s" % (current_version, new_version))
-    manifest["version"] = new_version
-else:
-    print("building release %s" % current_version)
+    js_files = glob.glob("src/*.js")
 
-print("formatting..")
-subprocess.check_call(["js-beautify", "-r", "src/stash.js"])
+    for filename in js_files:
+        print("formatting %s.." % filename)
+        subprocess.check_call(["js-beautify", "-r", filename])
 
-print("js linting..")
-subprocess.check_call(["jshint", "src/stash.js"])
+        print("js linting %s.." % filename)
+        subprocess.check_call(["jshint", filename])
 
-print("web-ext linting..")
-subprocess.check_call(["web-ext", "lint", "--warnings-as-errors"])
+    print("web-ext linting..")
+    subprocess.check_call(["web-ext", "lint", "--warnings-as-errors"])
 
 print("building..")
 subprocess.check_call(
@@ -42,7 +45,7 @@ subprocess.check_call(
     + ["--artifacts-dir", "dist"]
 )
 
-if new_version:
+if args.release:
     with open("manifest.json", "w") as f:
         json.dump(manifest, f, indent=2)
         f.write("\n")
