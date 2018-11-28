@@ -2,7 +2,7 @@ let g_stashed; // index of stashed sets
 let g_windows; // current windows and tabs
 let g_focused; // current window with tabs
 
-function $(selector) {
+function $$(selector) {
     return document.querySelector(selector);
 }
 
@@ -18,8 +18,8 @@ function stash_exists(name) {
 }
 
 function show_create_form() {
-    const name_el = $('#name');
-    const create_el = $('#create-preview');
+    const name_el = $$('#name');
+    const create_el = $$('#create-preview');
 
     // switch popup from list to create form
     const is_all = document.body.dataset.action === 'all';
@@ -27,10 +27,10 @@ function show_create_form() {
     // show title and preview
     let windows;
     if (is_all) {
-        $('#create-title-all').classList.remove('hidden');
+        $$('#create-title-all').classList.remove('hidden');
         windows = g_windows;
     } else {
-        $('#create-title-current').classList.remove('hidden');
+        $$('#create-title-current').classList.remove('hidden');
         windows = [g_focused];
     }
 
@@ -75,8 +75,8 @@ function show_create_form() {
     }
 
     // show form and focus name
-    $('#popup').classList.add('hidden');
-    $('#create').classList.remove('hidden');
+    $$('#popup').classList.add('hidden');
+    $$('#create').classList.remove('hidden');
 
     // and set the default name
     let name = 'Untitled';
@@ -90,7 +90,7 @@ function show_create_form() {
 }
 
 function stash(windows) {
-    let title = $('#name').value.trim();
+    let title = $$('#name').value.trim();
     let name = title.toLowerCase();
 
     // check for existing name
@@ -100,8 +100,8 @@ function stash(windows) {
     }
 
     // disable ui to show activity
-    $('#save-btn').classList.add('disabled');
-    $('#save-btn').disabled = true;
+    $$('#save-btn').classList.add('disabled');
+    $$('#save-btn').disabled = true;
 
     const stash_id = 'i' + Date.now();
 
@@ -274,32 +274,32 @@ document.addEventListener('click', (e) => {
 });
 
 function init_form() {
-    $('#name').addEventListener('keypress', (e) => {
+    $$('#name').addEventListener('keypress', (e) => {
         if (e.keyCode === 13) {
-            $('#save-btn').click();
+            $$('#save-btn').click();
         }
     });
-    $('#name').addEventListener('keyup', (e) => {
-        let name = $('#name').value.trim();
+    $$('#name').addEventListener('keyup', (e) => {
+        let name = $$('#name').value.trim();
 
         if (stash_exists(name)) {
-            $('#create-exists').classList.remove('hidden');
-            $('#save-btn').classList.add('disabled');
-            $('#save-btn').disabled = true;
+            $$('#create-exists').classList.remove('hidden');
+            $$('#save-btn').classList.add('disabled');
+            $$('#save-btn').disabled = true;
             return;
         }
-        $('#create-exists').classList.add('hidden');
+        $$('#create-exists').classList.add('hidden');
 
         if (name === '') {
-            $('#save-btn').classList.add('disabled');
-            $('#save-btn').disabled = true;
+            $$('#save-btn').classList.add('disabled');
+            $$('#save-btn').disabled = true;
             return;
         }
-        $('#save-btn').classList.remove('disabled');
-        $('#save-btn').disabled = false;
+        $$('#save-btn').classList.remove('disabled');
+        $$('#save-btn').disabled = false;
     });
-    $('#save-btn').addEventListener('click', () => {
-        if ($('#save-btn').disabled) {
+    $$('#save-btn').addEventListener('click', () => {
+        if ($$('#save-btn').disabled) {
             return;
         }
         if (document.body.dataset.action === 'current') {
@@ -360,16 +360,16 @@ function init_g_windows() {
 
             // enable stash menu items
             if (g_focused) {
-                $('#stash-current').classList.remove('disabled');
+                $$('#stash-current').classList.remove('disabled');
             } else {
-                $('#stash-current').title = 'No stashable tabs';
+                $$('#stash-current').title = 'No stashable tabs';
             }
             if (g_windows.length > 1) {
-                $('#stash-all').classList.remove('disabled');
+                $$('#stash-all').classList.remove('disabled');
             } else if (g_windows.length === 1) {
-                $('#stash-all').title = 'Only one window';
+                $$('#stash-all').title = 'Only one window';
             } else {
-                $('#stash-all').title = 'No stashable tabs';
+                $$('#stash-all').title = 'No stashable tabs';
             }
         })
         .catch((e) => {
@@ -378,7 +378,7 @@ function init_g_windows() {
 }
 
 function init_g_stashed() {
-    const popup_el = $('#popup');
+    const popup_el = $$('#popup');
 
     function add_list_item(id, text, title) {
         let item_div = document.createElement('div');
@@ -393,10 +393,10 @@ function init_g_stashed() {
     }
 
     g_stashed = [];
-    let stashed_item = $('#popup .stashed');
+    let stashed_item = $$('#popup .stashed');
     while (stashed_item) {
         stashed_item.parentNode.removeChild(stashed_item);
-        stashed_item = $('#popup .stashed');
+        stashed_item = $$('#popup .stashed');
     }
 
     browser.storage.sync.get(['index'])
@@ -410,7 +410,7 @@ function init_g_stashed() {
                 return;
             }
 
-            $('#stash-empty').classList.add('hidden');
+            $$('#stash-empty').classList.add('hidden');
             for (let s of g_stashed) {
                 add_list_item(s.id, s.title, s.summary);
             }
