@@ -80,10 +80,12 @@ function show_create_form() {
 
     // and set the default name
     let name = 'Untitled';
-    for (let t of g_focused.tabs) {
-        if (t.active) {
-            name = t.title;
-            break;
+    if (g_focused) {
+        for (let t of g_focused.tabs) {
+            if (t.active) {
+                name = t.title;
+                break;
+            }
         }
     }
     set_name(name);
@@ -221,12 +223,18 @@ function restore(stash_id) {
 }
 
 function remove_stash(stash_id) {
+    let updated = false;
     for (let i in g_stashed) {
         if (g_stashed[i].id === stash_id) {
-            delete g_stashed[i];
+            g_stashed.splice(i, 1);
+            updated = true;
             break;
         }
     }
+    if (!updated) {
+        return;
+    }
+
     browser.storage.sync.set({
             index: g_stashed
         })
