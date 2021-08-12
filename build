@@ -29,10 +29,10 @@ if not args.quick:
 
     for filename in js_files:
         print("formatting %s.." % filename)
-        subprocess.check_call(["js-beautify", "-r", filename])
+        subprocess.check_call(["prettier", "--write", "--tab-width", "4", filename])
 
-        print("js linting %s.." % filename)
-        subprocess.check_call(["jshint", filename])
+        print("linting %s.." % filename)
+        subprocess.check_call(["eslint", filename])
 
     print("web-ext linting..")
     subprocess.check_call(["web-ext", "lint", "--warnings-as-errors"])
