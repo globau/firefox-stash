@@ -26,6 +26,8 @@ open.
 Change Log
 ==========
 
+* **2.2** - Aug 2021
+    - Minor bug fixes
 * **2.1** - Dec 2018
     - Show badge with number of stashes
     - Minor bug fixes
