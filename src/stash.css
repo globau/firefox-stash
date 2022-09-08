@@ -1,42 +1,44 @@
 .hidden {
-    display: none !important;
+  display: none !important;
 }
 
 /* ensure initial paint is wide enough, removes visible reflow */
 #popup {
-    min-width: 13em;
+  min-width: 13em;
 }
 
+/* stylelint-disable selector-class-pattern */
 #create .panel-section-formElements .title {
-    margin-bottom: 0.5em;
+  margin-bottom: 0.5em;
 }
 
 #create .panel-section-formElements {
-    padding-bottom: 0;
+  padding-bottom: 0;
 }
+/* stylelint-enable selector-class-pattern */
 
 #create-exists {
-    display: inline-block;
-    vertical-align: middle;
-    color: #444;
+  color: #444;
+  display: inline-block;
+  vertical-align: middle;
 }
 
 #create-preview {
-    padding-bottom: 12px;
+  padding-bottom: 12px;
 }
 
 .panel-list-item .text {
-    max-width: 25em;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  max-width: 25em;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
 }
 
 #popup .panel-list-item .text-shortcut {
-    margin-left: 20px;
+  margin-left: 20px;
 }
 
 #create-preview .panel-list-item.title {
-    font-weight: bold;
-    color: #000;
+  color: #000;
+  font-weight: bold;
 }

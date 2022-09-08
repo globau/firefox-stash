@@ -1,0 +1,23 @@
+{
+  "extends": "stylelint-config-standard",
+  "plugins": [
+    "stylelint-order"
+  ],
+  "rules": {
+    "color-hex-length": "short",
+    "function-url-quotes": "never",
+    "indentation": 2,
+    "no-descending-specificity": null,
+    "order/properties-alphabetical-order": true,
+    "selector-pseudo-element-colon-notation": "double",
+    "string-quotes": "double",
+    "value-no-vendor-prefix": [
+      true,
+      {
+        "ignoreValues": [
+          "box"
+        ]
+      }
+    ]
+  }
+}

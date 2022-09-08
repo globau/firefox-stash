@@ -1,0 +1,63 @@
+{
+  "env": {
+    "browser": true,
+    "es2020": true,
+    "webextensions": true
+  },
+  "extends": [
+    "eslint:recommended",
+    "plugin:import/recommended",
+    "plugin:unicorn/recommended"
+  ],
+  "globals": {
+    "Atomics": "readonly",
+    "SharedArrayBuffer": "readonly"
+  },
+  "parserOptions": {
+    "ecmaVersion": 2018,
+    "sourceType": "module"
+  },
+  "plugins": [
+    "unicorn",
+    "unused-imports"
+  ],
+  "rules": {
+    "arrow-body-style": "error",
+    "arrow-parens": "error",
+    "block-scoped-var": "error",
+    "class-methods-use-this": "error",
+    "consistent-return": "error",
+    "curly": [
+      "error",
+      "multi-line"
+    ],
+    "eqeqeq": "error",
+    "no-alert": "error",
+    "no-confusing-arrow": "error",
+    "no-console": "error",
+    "no-duplicate-imports": "error",
+    "no-else-return": "error",
+    "no-implicit-globals": "error",
+    "no-unused-vars": "off",
+    "no-use-before-define": [
+      "error",
+      "nofunc"
+    ],
+    "no-var": "error",
+    "unicorn/better-regex": "off",
+    "unicorn/numeric-separators-style": "off",
+    "unicorn/prefer-optional-catch-binding": "off",
+    "unicorn/prefer-spread": "off",
+    "unicorn/prefer-top-level-await": "off",
+    "unused-imports/no-unused-imports": "error",
+    "unused-imports/no-unused-vars": [
+      "error",
+      {
+        "args": "after-used",
+        "argsIgnorePattern": "^_",
+        "vars": "all",
+        "varsIgnorePattern": "^_"
+      }
+    ]
+  }
+}

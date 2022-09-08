@@ -1,0 +1,14 @@
+{
+  "dependencies": {
+    "eslint": "8",
+    "eslint-plugin-import": "2",
+    "eslint-plugin-unicorn": "43",
+    "eslint-plugin-unused-imports": "2",
+    "prettier": "2",
+    "stylelint": "14",
+    "stylelint-config-standard": "28",
+    "stylelint-order": "5",
+    "web-ext": "7"
+  },
+  "license": "MPL-2.0"
+}
