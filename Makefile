@@ -2,9 +2,10 @@
 
 css-files:=$(wildcard src/*.css)
 html-files:=$(wildcard src/*.html)
-js-files:=$(wildcard src/*.js)
+js-files:=$(wildcard src/*.js src/*.mjs)
 asset-files:=$(wildcard assets/*)
 all-files:=$(css-files) $(html-files) $(js-files) $(asset-files) manifest.json
+ignore-files:=Makefile manifest-version.py package.json yarn.lock
 version:=$(shell ./manifest-version.py)
 
 # building
@@ -12,13 +13,13 @@ version:=$(shell ./manifest-version.py)
 build: dist/stash-snapshot.zip
 
 dist/stash-snapshot.zip: $(all-files) node_modules/.updated
-	yarn --silent run web-ext build --filename stash-snapshot.zip --overwrite-dest --ignore-files build --artifacts-dir dist
+	yarn --silent run web-ext build --filename stash-snapshot.zip --overwrite-dest --ignore-files $(ignore-files) --artifacts-dir dist
 
-release: format dist/stash-$(version).zip
+release: format test dist/stash-$(version).zip
 
 dist/stash-$(version).zip: $(all-files) node_modules/.updated
 	$(info Building stash-$(version).zip)
-	yarn --silent run web-ext build --filename stash-$(version).zip --ignore-files build --artifacts-dir dist
+	yarn --silent run web-ext build --filename stash-$(version).zip --overwrite-dest --ignore-files $(ignore-files) --artifacts-dir dist
 
 clean:
 	rm -f .git/css-format .git/html-format .git/js-format dist/stash-snapshot.zip dist/stash-$(version).zip

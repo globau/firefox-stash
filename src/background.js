@@ -1,54 +1,36 @@
-async function init_storage() {
-  // clean up stale entries
+// sadly in manifest v2 this file can't be a module, making importing awkward
+
+browser.runtime.onMessage.addListener(async (arg) => {
   try {
-    // build list of valid ids
-    let valid_ids = [];
-    let result = await browser.storage.sync.get();
-    for (let s of result.index) {
-      valid_ids.push(s.id);
-    }
-
-    // build list of keys with tab data
-    let stash_ids = [];
-    for (let k of Object.keys(result)) {
-      if (k.search(/^i\d+$/) === 0) {
-        stash_ids.push(k);
+    const stash = await import("./stash-bg.mjs");
+    switch (arg.event) {
+      case "update-badge": {
+        // no-op
+        break;
       }
-    }
-
-    // delete stale entries
-    for (let id of stash_ids) {
-      if (valid_ids.includes(id)) {
-        await browser.storage.sync.remove(id);
+      case "store": {
+        await stash.store(arg.title, arg.windows);
+        break;
+      }
+      case "restore": {
+        await stash.restore(arg.id);
+        break;
       }
     }
   } catch (error) {
     // eslint-disable-next-line no-console
-    console.error("stash:", error);
+    console.exception(error);
   }
-}
 
-async function init_badge() {
-  try {
-    // fetch index and hide_badge setting
-    let result = await browser.storage.sync.get(["index", "hide_badge"]);
+  // always update the badge
+  const badge = await import("./badge-bg.mjs");
+  await badge.update();
+});
 
-    // hide badge if required
-    if (result.hide_badge) {
-      browser.browserAction.setBadgeText({ text: "" });
-      return;
-    }
+(async () => {
+  const stash = await import("./stash-bg.mjs");
+  const badge = await import("./badge-bg.mjs");
 
-    // otherwise set number of stashed items in the badge
-    let count = result.index ? result.index.filter(Boolean).length : 0;
-    browser.browserAction.setBadgeBackgroundColor({ color: "#444" });
-    browser.browserAction.setBadgeText({ text: `${count || ""}` });
-  } catch (error) {
-    // eslint-disable-next-line no-console
-    console.error("stash:", error);
-  }
-}
-
-init_storage();
-init_badge();
-browser.runtime.onMessage.addListener(init_badge);
+  await stash.deleteStale();
+  await badge.update();
+})();

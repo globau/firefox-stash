@@ -1,7 +1,7 @@
 {
   "env": {
     "browser": true,
-    "es2020": true,
+    "es2022": true,
     "webextensions": true
   },
   "extends": [
@@ -14,7 +14,7 @@
     "SharedArrayBuffer": "readonly"
   },
   "parserOptions": {
-    "ecmaVersion": 2018,
+    "ecmaVersion": 2022,
     "sourceType": "module"
   },
   "plugins": [
@@ -25,6 +25,12 @@
     "arrow-body-style": "error",
     "arrow-parens": "error",
     "block-scoped-var": "error",
+    "camelcase": [
+      "error",
+      {
+        "properties": "never"
+      }
+    ],
     "class-methods-use-this": "error",
     "consistent-return": "error",
     "curly": [
@@ -49,6 +55,7 @@
     "unicorn/prefer-optional-catch-binding": "off",
     "unicorn/prefer-spread": "off",
     "unicorn/prefer-top-level-await": "off",
+    "unicorn/prevent-abbreviations": "off",
     "unused-imports/no-unused-imports": "error",
     "unused-imports/no-unused-vars": [
       "error",

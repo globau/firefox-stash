@@ -26,6 +26,9 @@ open.
 Change Log
 ==========
 
+* **3.0** - Nov 2022
+  - Refactor all the things
+  - Tabs are now restored in a suspended state
 * **2.2** - Aug 2021
     - Minor bug fixes
 * **2.1** - Dec 2018
